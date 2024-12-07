@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ecom
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecom
+    username: root
+    password: 87654321
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+jwt:
+  secret: "1tssecret123456781tssecret123456781tssecret12345678"
+  access:
+    expiration: 300000
+  refresh:
+    expiration: 300000
+logging:
+  level:
+    root: INFO
+allowed:
+  ips: 192.168.1.100,127.0.0.1
+
+
