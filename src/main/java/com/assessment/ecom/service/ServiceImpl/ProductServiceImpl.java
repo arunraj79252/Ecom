@@ -8,6 +8,7 @@ import com.assessment.ecom.exception.CustomException;
 import com.assessment.ecom.repository.ProductRepository;
 import com.assessment.ecom.repository.SaleRepository;
 import com.assessment.ecom.service.ProductService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,15 @@ public class ProductServiceImpl implements ProductService {
     SaleRepository saleRepository;
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) throws Exception {
-        Product savedProduct = productRepository.save(new Product(productDTO));
-        LOGGER.info("Product created successfully");
-        return new ProductDTO(savedProduct);
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        try {
+            Product savedProduct = productRepository.save(new Product(productDTO));
+            LOGGER.info("Product created successfully");
+            return new ProductDTO(savedProduct);
+        } catch (Exception e) {
+            LOGGER.error("createProduct()" + e);
+            throw new CustomException.ServerErrorException("Exception when saving product");
+        }
     }
 
     @Override
@@ -94,7 +100,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Sale createSale(SaleDTO saleDTO) {
+        Long productId = saleDTO.getProductId();
+        Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException.BadRequestException("Invalid productId"));
+        if (product.getQty() < saleDTO.getQuantity())
+            throw new CustomException.BadRequestException("Product is out of stock");
+        product.setQty(product.getQty() - saleDTO.getQuantity());
+        productRepository.save(product);
+        LOGGER.info("Product qty updated");
         Sale sale = saleRepository.save(new Sale(saleDTO));
         LOGGER.info("Sale created successfully");
         return sale;

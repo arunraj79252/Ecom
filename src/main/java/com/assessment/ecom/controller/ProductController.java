@@ -6,6 +6,7 @@ import com.assessment.ecom.dto.SaleDTO;
 import com.assessment.ecom.entity.Sale;
 import com.assessment.ecom.service.ProductPdfService;
 import com.assessment.ecom.service.ProductService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ProductController {
 
     //for adding new product
     @PostMapping("/product")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) throws Exception {
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDTO));
     }
 
@@ -75,6 +76,7 @@ public class ProductController {
     public ResponseEntity<Double> getTotalRevenue() {
         return ResponseEntity.ok(productService.getTotalRevenue());
     }
+
     @GetMapping("/product/download-pdf")
     public ResponseEntity<byte[]> downloadProductPdf() {
         try {

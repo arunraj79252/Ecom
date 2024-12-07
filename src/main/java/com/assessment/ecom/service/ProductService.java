@@ -6,7 +6,7 @@ import com.assessment.ecom.entity.Sale;
 import org.springframework.data.domain.Page;
 
 public interface ProductService {
-    ProductDTO createProduct(ProductDTO productDTO) throws Exception;
+    ProductDTO createProduct(ProductDTO productDTO);
 
     ProductDTO getProductById(Long id);
 

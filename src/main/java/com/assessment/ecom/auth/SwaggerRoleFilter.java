@@ -53,7 +53,6 @@ public class SwaggerRoleFilter {
             if (jwtUtil.validateToken(token)) {
                 List<String> roles = jwtUtil.extractRoles(token);
                 if (roles != null && roles.contains("ROLE_ADMIN")) {
-                    System.out.println("111111111111111111111111");
                     return "ADMIN";
                 }
                 return "USER"; // or return "PUBLIC" if no valid role found
