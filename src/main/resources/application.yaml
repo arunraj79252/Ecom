@@ -12,9 +12,9 @@ spring:
 jwt:
   secret: "1tssecret123456781tssecret123456781tssecret12345678"
   access:
-    expiration: 300000
+    expiration: 900000
   refresh:
-    expiration: 300000
+    expiration: 1800000
 logging:
   level:
     root: INFO

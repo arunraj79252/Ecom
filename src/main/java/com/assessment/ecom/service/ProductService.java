@@ -1,6 +1,8 @@
 package com.assessment.ecom.service;
 
 import com.assessment.ecom.dto.ProductDTO;
+import com.assessment.ecom.dto.SaleDTO;
+import com.assessment.ecom.entity.Sale;
 import org.springframework.data.domain.Page;
 
 public interface ProductService {
@@ -17,4 +19,6 @@ public interface ProductService {
     double getTotalRevenue();
 
     double getRevenueByProduct(Long productId);
+
+    Sale createSale(SaleDTO saleDTO);
 }

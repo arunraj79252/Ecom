@@ -34,8 +34,8 @@ public class SwaggerConfig {
                                         .bearerFormat("JWT")));
     }
 
-    @Bean
-    public OpenApiCustomizer customizer() {
-        return openAPI -> swaggerRoleFilter.filterOpenAPI(openAPI);
-    }
+//    @Bean
+//    public OpenApiCustomizer customizer() {
+//        return openAPI -> swaggerRoleFilter.filterOpenAPI(openAPI);
+//    }
 }

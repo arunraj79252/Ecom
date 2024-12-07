@@ -1,6 +1,7 @@
 package com.assessment.ecom.service.ServiceImpl;
 
 import com.assessment.ecom.dto.ProductDTO;
+import com.assessment.ecom.dto.SaleDTO;
 import com.assessment.ecom.entity.Product;
 import com.assessment.ecom.entity.Sale;
 import com.assessment.ecom.exception.CustomException;
@@ -64,15 +65,16 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
         LOGGER.info("Product deleted");
     }
+
     //to get total revenue
     public double getTotalRevenue() {
-        try{
+        try {
             List<Sale> sales = saleRepository.findAll();
             return sales.stream()
                     .mapToDouble(sale -> sale.getQuantity() * productRepository.findById(sale.getProductId()).orElseThrow().getPrice())
                     .sum();
-        }catch (Exception e){
-            LOGGER.info("Exception in getTotalRevenue() "+ e);
+        } catch (Exception e) {
+            LOGGER.info("Exception in getTotalRevenue() " + e);
             throw new CustomException.BadRequestException("Error when generating total revenue..");
         }
 
@@ -85,11 +87,17 @@ public class ProductServiceImpl implements ProductService {
             return sales.stream()
                     .mapToDouble(sale -> sale.getQuantity() * productRepository.findById(sale.getProductId()).orElseThrow().getPrice())
                     .sum();
+        } catch (Exception e) {
+            LOGGER.info("Exception in getRevenueByProduct() " + e);
+            throw new CustomException.BadRequestException("Error when generating revenue by product:" + productId);
         }
-        catch (Exception e){
-            LOGGER.info("Exception in getRevenueByProduct() "+ e);
-            throw new CustomException.BadRequestException("Error when generating revenue by product:"+productId);
-        }
+    }
+
+    @Override
+    public Sale createSale(SaleDTO saleDTO) {
+        Sale sale = saleRepository.save(new Sale(saleDTO));
+        LOGGER.info("Sale created successfully");
+        return sale;
     }
 
     private ProductDTO covertToProductDTO(Product product) {

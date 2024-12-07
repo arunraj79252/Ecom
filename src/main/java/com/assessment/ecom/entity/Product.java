@@ -16,8 +16,8 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private Long price;
-    private Long qty;
+    private Double price;
+    private Integer qty;
     @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Sale> sales;
 

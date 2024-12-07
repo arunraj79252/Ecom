@@ -51,7 +51,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/user").permitAll()
 
-                                .anyRequest().hasRole("ADMIN")
+                                .anyRequest().hasAuthority("ROLE_ADMIN")
                 )
                 .addFilterBefore((Filter) jwtAuthFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class); // Cast to Filter explicitly
 

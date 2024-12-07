@@ -10,8 +10,8 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    private Long price;
-    private Long qty;
+    private double price;
+    private Integer qty;
 
     public ProductDTO(Product product) {
         this.id = product.getId();

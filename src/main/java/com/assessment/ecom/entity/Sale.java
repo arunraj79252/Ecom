@@ -1,5 +1,6 @@
 package com.assessment.ecom.entity;
 
+import com.assessment.ecom.dto.SaleDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,4 +20,10 @@ public class Sale {
     private Long productId;
     private int quantity;
     private LocalDate saleDate;
+
+    public Sale(SaleDTO saleDTO) {
+        this.productId = saleDTO.getProductId();
+        this.quantity = saleDTO.getQuantity();
+        this.saleDate = LocalDate.now();
+    }
 }
