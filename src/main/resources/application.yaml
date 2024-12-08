@@ -18,7 +18,8 @@ jwt:
 logging:
   level:
     root: INFO
-allowed:
-  ips: 192.168.1.100,127.0.0.1
+ip-filter:
+  allowed-ips: 127.0.0.1,192.168.1.1,0:0:0:0:0:0:0:1
+
 
 

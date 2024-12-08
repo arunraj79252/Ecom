@@ -36,7 +36,9 @@ public class JwtAuthFilter implements Filter {
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     // Define the list of excluded routes with HTTP methods as strings
-    private final List<RouteConfig> excludedRoutes = List.of(new RouteConfig("/api/user", "POST"), new RouteConfig("/api/user", "GET"), new RouteConfig("/api/auth/**", null), new RouteConfig("/swagger-ui/**", "GET"),   // Exclude Swagger UI
+    private final List<RouteConfig> excludedRoutes = List.of(new RouteConfig("/api/user", "POST"),
+            new RouteConfig("/api/user", "GET"), new RouteConfig("/api/auth/**", null),
+            new RouteConfig("/swagger-ui/**", "GET"),   // Exclude Swagger UI
             new RouteConfig("/v3/api-docs/**", "GET"),  // Exclude OpenAPI docs
             new RouteConfig("/swagger-ui.html", null),  // Exclude old Swagger UI path (for older versions)
             new RouteConfig("/swagger-resources/**", null) // Exclude Swagger resources

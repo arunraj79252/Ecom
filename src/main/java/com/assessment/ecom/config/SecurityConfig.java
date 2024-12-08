@@ -40,18 +40,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                // Public access for Swagger GET/POST APIs
-                                .requestMatchers( "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-//                                .requestMatchers(HttpMethod.POST, "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-
-                                // Restrict other Swagger methods based on roles
-//                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").hasRole("ADMIN")
-
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/user").permitAll()
-
-                                .anyRequest().hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/user").permitAll()
+                        .anyRequest().hasAuthority("ROLE_ADMIN")
                 )
                 .addFilterBefore((Filter) jwtAuthFilter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class); // Cast to Filter explicitly
 
