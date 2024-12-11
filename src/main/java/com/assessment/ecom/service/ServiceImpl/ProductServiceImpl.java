@@ -114,6 +114,35 @@ public class ProductServiceImpl implements ProductService {
         return sale;
     }
 
+    @Override
+    @Transactional
+    public Sale updateSale(Long id, SaleDTO saleDTO) {
+        try {
+            Sale sale = saleRepository.findById(id).orElseThrow(() -> new CustomException.BadRequestException("Sale not found"));
+            Long productId = sale.getProductId();
+            Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException.BadRequestException("Invalid productId"));
+            if(saleDTO.getQuantity()>sale.getQuantity()){
+                int effectiveQty= saleDTO.getQuantity()- sale.getQuantity();
+                if (product.getQty() < effectiveQty)
+                    throw new CustomException.BadRequestException("Product is out of stock");
+                product.setQty(product.getQty() - effectiveQty);
+
+            } else if (saleDTO.getQuantity()<sale.getQuantity()) {
+                int effectiveQty= sale.getQuantity()- saleDTO.getQuantity();
+                product.setQty(product.getQty() + effectiveQty);
+            }
+            productRepository.save(product);
+            LOGGER.info("Product qty updated");
+            sale.setQuantity(saleDTO.getQuantity());
+            sale.setSaleDate(saleDTO.getSaleDate());
+            return saleRepository.save(sale);
+        }
+        catch (Exception e){
+            LOGGER.error("error in updateSale()"+e);
+            throw  new CustomException.BadRequestException("Couldn't update SALE!!");
+        }
+    }
+
     private ProductDTO covertToProductDTO(Product product) {
         return new ProductDTO(product);
     }

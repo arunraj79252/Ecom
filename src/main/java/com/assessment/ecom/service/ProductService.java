@@ -21,4 +21,6 @@ public interface ProductService {
     double getRevenueByProduct(Long productId);
 
     Sale createSale(SaleDTO saleDTO);
+
+    Sale updateSale(Long id, SaleDTO saleDTO);
 }
